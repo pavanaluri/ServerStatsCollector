@@ -1,0 +1,19 @@
+{
+  "name": "serverstatscollector",
+  "version": "0.1.0",
+  "description": "Executes shell commands to collect Server Performance Metrics like CPU, Memory etc. and writes them to Database",
+  "main": "bin/deamon-main.js",
+  "scripts": {
+    "start": "node ./bin/deamon-main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "config": {
+    "env": "DEV"
+  },
+  "author": "Pavan Aluri",
+  "license": "ISC",
+  "dependencies": {
+    "mssql": "^4.3.0",
+    "winston": "^3.1.0"
+  }
+}
