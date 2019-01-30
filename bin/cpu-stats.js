@@ -29,8 +29,18 @@ async function collectAndWrite() {
         let sp = scriptOP['SYS_PERCENTAGE'];
         let ip = scriptOP['IDLE_PERCENTAGE'];
         logger.info(fileName + ' ts - ' + ts + ' cpu ' + cpu);
+        if (typeof ts == 'undefined' || up == '-1') {
+
+            return;
+
+        }
+
+        let utc = new Date(`${ts}` + ' UTC');
+        logger.info(fileName + " utc " + utc);
+        let tsET = new Date(utc.getTime() - (utc.getTimezoneOffset() * 60000)); //convert UTC to ET
+        let tsl = tsET.toISOString();
         const request = dbpool.request()
-        const sqlQuery = `INSERT INTO SERV_CPU_METRICS (TIMESTAMP ,CPU ,USER_PERCENTAGE ,SYS_PERCENTAGE ,IDLE_PERCENTAGE) VALUES ('${ts}','${cpu}',${up},${sp},${ip})`;
+        const sqlQuery = `INSERT INTO SERV_CPU_METRICS (TIMESTAMP ,CPU ,USER_PERCENTAGE ,SYS_PERCENTAGE ,IDLE_PERCENTAGE) VALUES ('${tsl}','${cpu}',CAST('${up}' AS FLOAT),CAST('${sp}' AS FLOAT),CAST('${ip}' AS FLOAT))`;
         logger.info(fileName + " sqlQuery  " + sqlQuery);
         const transaction = new sql.Transaction(dbpool)
         transaction.begin(err => {

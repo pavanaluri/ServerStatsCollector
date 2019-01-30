@@ -9,8 +9,8 @@ async function initialize() {
   logger.info(fileName + ' calling appConfig.getConfigData()');
   let confdata = appConfig.getConfigData();
   let dbdata = confdata.db;
-  logger.info(fileName + 'dbdata = '+dbdata);
-  logger.info(fileName + 'DB User = '+dbdata.user);
+  logger.info(fileName + 'dbdata = ' + dbdata);
+  logger.info(fileName + 'DB User = ' + dbdata.user);
   pool = await sql.connect(dbdata);
 }
 

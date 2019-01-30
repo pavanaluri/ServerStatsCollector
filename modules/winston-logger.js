@@ -35,24 +35,24 @@ const myFormat = printf(info => {
   return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
 });
 
-  let logger = createLogger({
-    format: combine(
-      label({ label: 'p2p-API' }),
-      timestamp(),
-      myFormat
-    ),
-    transports: [
-      new winston.transports.Console(options.console),
-      new winston.transports.File(options.errorFile),
-      new winston.transports.File(options.file)
-    ],
-    exitOnError: false
-  });
+let logger = createLogger({
+  format: combine(
+    label({ label: 'p2p-API' }),
+    timestamp(),
+    myFormat
+  ),
+  transports: [
+    new winston.transports.Console(options.console),
+    new winston.transports.File(options.errorFile),
+    new winston.transports.File(options.file)
+  ],
+  exitOnError: false
+});
 
-  //below stream function will get the morgan-generated output into the winston log files
-  logger.stream = {
-    write: function(message, encoding) {
-      logger.info(message.slice(0, -1));
-    },
-  };
+//below stream function will get the morgan-generated output into the winston log files
+logger.stream = {
+  write: function (message, encoding) {
+    logger.info(message.slice(0, -1));
+  },
+};
 module.exports = logger;

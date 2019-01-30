@@ -30,9 +30,18 @@ async function collectAndWrite() {
         let u = scriptOP['USED'];
         let f = scriptOP['FREE'];
         logger.info(fileName + ' ts - ' + ts + ' mt ' + mt);
+        if (typeof ts == 'undefined' || t == '-1') {
 
+            return;
+
+        }
+
+        let utc = new Date(`${ts}` + ' UTC');
+        logger.info(fileName + " utc " + utc);
+        let tsET = new Date(utc.getTime() - (utc.getTimezoneOffset() * 60000)); //convert UTC to ET
+        let tsl = tsET.toISOString();
         const request = dbpool.request()
-        const sqlQuery = `INSERT INTO SERV_MEM_METRICS (TIMESTAMP ,MEM_TYPE ,TOTAL ,USED ,FREE) VALUES ('${ts}','${mt}','${t}','${u}','${f}')`;
+        const sqlQuery = `INSERT INTO SERV_MEM_METRICS (TIMESTAMP ,MEM_TYPE ,TOTAL ,USED ,FREE) VALUES ('${tsl}' ,'${mt}','${t}','${u}','${f}')`;
         logger.info(fileName + " sqlQuery  " + sqlQuery);
         const transaction = new sql.Transaction(dbpool)
         transaction.begin(err => {

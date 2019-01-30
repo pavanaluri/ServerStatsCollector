@@ -24,7 +24,7 @@ function run() {
             }
 
         } catch (err) {
-            console.log(err);
+            logger.log(err);
             reject(err);
             return;
         }

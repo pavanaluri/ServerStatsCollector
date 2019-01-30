@@ -9,7 +9,7 @@ async function startup() {
     logger.info('Initializing database module');
     await database.initialize();
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     process.exit(1); // Non-zero failure code
   }
 
@@ -18,7 +18,7 @@ async function startup() {
     //can have individual scheduler for each service or combine them
     await schedulerDemon.run();
   } catch (err) {
-    console.error(err);
+    logger.error(err);
     process.exit(1); // Non-zero failure code
   }
 
@@ -35,7 +35,7 @@ async function shutdown(e) {
 
     await database.close();
   } catch (e) {
-    console.error(e);
+    logger.error(e);
 
     err = err || e;
   }
@@ -62,6 +62,6 @@ process.on('SIGINT', () => {
 
 process.on('uncaughtException', err => {
   logger.info('Uncaught exception');
-  console.error(err);
+  logger.error(err);
   shutdown(err);
 });

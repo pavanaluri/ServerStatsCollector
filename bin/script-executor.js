@@ -8,13 +8,13 @@ function executeCPUScript() {
         let data = {
             "TIMESTAMP": "",
             "CPU": "",
-            "USER_PERCENTAGE": "",
+            "USER_PERCENTAGE": "-1",
             "SYS_PERCENTAGE": "",
             "IDLE_PERCENTAGE": ""
         }
 
         const { startDate: sd, startHr: st, endDate: ed, endHr: et } = getDates();
-        let command = `sadf -s ${st} -e ${et} -j -T`; //this command out put is in JSON format
+        let command = `sadf -s ${st} -e ${et} -j `; //this command out put is in JSON format
         logger.info(fileName + ' executeCPUScript() command: ' + command);
 
         exec(command, (error, stdout, stderr) => {
@@ -122,12 +122,12 @@ function executeMemScript() {
         let data = {
             "TIMESTAMP": "",
             "MEM_TYPE": "",
-            "TOTAL": 0,
+            "TOTAL": -1,
             "USED": 0,
             "FREE": 0
         }
         const { startDate: sd, startHr: st, endDate: ed, endHr: et } = getDates();
-        let command = `sadf -s ${st} -e ${et} -j -T -- -r`;
+        let command = `sadf -s ${st} -e ${et} -j -- -r`;
         logger.info(fileName + ' executeMemScript() command: ' + command);
         exec(command,
             (error, stdout, stderr) => {
