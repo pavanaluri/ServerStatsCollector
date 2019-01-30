@@ -4,6 +4,7 @@ const logger = require('../modules/winston-logger.js');
 
 async function startup() {
   logger.info('Starting B2B Server Stats collector Deamon at - ' + new Date());
+   // info or below is written to console and debug or below is written to log file 
 
   try {
     logger.info('Initializing database module');
@@ -28,11 +29,10 @@ startup();
 async function shutdown(e) {
   let err = e;
 
-  logger.info('Shutting down PUSH application');
+  logger.info('Shutting down scheduler deamon');
 
   try {
     logger.info('Closing database module');
-
     await database.close();
   } catch (e) {
     logger.error(e);
@@ -51,7 +51,6 @@ async function shutdown(e) {
 
 process.on('SIGTERM', () => {
   logger.info('Received SIGTERM');
-
   shutdown();
 });
 

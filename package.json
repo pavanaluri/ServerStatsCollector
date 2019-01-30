@@ -8,13 +8,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "config": {
-    "env": "PROD"
+    "env": "DEV"
   },
   "author": "Pavan Aluri",
   "license": "ISC",
   "dependencies": {
     "app-root-path": "^2.1.0",
     "mssql": "^4.3.0",
-    "winston": "^3.1.0"
+    "winston": "^3.1.0",
+    "moment-timezone":"2.24.0"
   }
 }

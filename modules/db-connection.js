@@ -6,11 +6,11 @@ let pool;
 
 
 async function initialize() {
-  logger.info(fileName + ' calling appConfig.getConfigData()');
+  logger.debug(fileName + ' calling appConfig.getConfigData()');
   let confdata = appConfig.getConfigData();
   let dbdata = confdata.db;
-  logger.info(fileName + 'dbdata = ' + dbdata);
-  logger.info(fileName + 'DB User = ' + dbdata.user);
+  logger.debug(fileName + 'dbdata = ' + dbdata);
+  logger.debug(fileName + 'DB User = ' + dbdata.user);
   pool = await sql.connect(dbdata);
 }
 
@@ -24,7 +24,7 @@ module.exports.getPool = getPool;
 
 async function close() {
   //await oracledb.getPool().close();
-  logger.info(fileName + ' - closing connection pool ' + pool);
+  logger.debug(fileName + ' - closing connection pool ' + pool);
   pool.close();
 }
 

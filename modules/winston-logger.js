@@ -1,9 +1,10 @@
 var winston = require('winston');
 var appRoot = require('app-root-path');
+const moment = require('moment-timezone');
 
 var options = {
   file: {
-    level: 'info',
+    level: 'debug',
     filename: `${appRoot}/logs/Applogs.log`,
     handleExceptions: true,
     json: false,
@@ -21,11 +22,11 @@ var options = {
     colorize: true,
   },
   console: {
-    level: 'debug',
+    level: 'info',
     handleExceptions: true,
     json: false,
     colorize: true,
-  },
+  }
 };
 
 const { createLogger, format, transports } = require('winston');
@@ -35,16 +36,21 @@ const myFormat = printf(info => {
   return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`;
 });
 
+const localTimestamp = format((info, opts) => {
+    info.timestamp = moment().tz('America/New_York').format("YYYY-MM-DD hh:mm:ss z");
+  return info;
+});
+
 let logger = createLogger({
   format: combine(
-    label({ label: 'p2p-API' }),
-    timestamp(),
+    label({ label: 'b2b-dash-ssc' }),
+    localTimestamp(),
     myFormat
   ),
   transports: [
-    new winston.transports.Console(options.console),
     new winston.transports.File(options.errorFile),
-    new winston.transports.File(options.file)
+    new winston.transports.File(options.file),
+    new winston.transports.Console(options.console)
   ],
   exitOnError: false
 });
@@ -52,7 +58,7 @@ let logger = createLogger({
 //below stream function will get the morgan-generated output into the winston log files
 logger.stream = {
   write: function (message, encoding) {
-    logger.info(message.slice(0, -1));
+    logger.debug(message.slice(0, -1));
   },
 };
 module.exports = logger;

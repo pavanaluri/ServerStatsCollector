@@ -13,7 +13,7 @@ function getConfigData() {
     configData = {};
 
     let env = process.env.npm_package_config_env;
-    logger.info('config_env= ' + env);
+    logger.debug('config_env= ' + env);
     //console.log('env = '+pkg.config.env);
     //LOAD JSON
     if (env === undefined || env == null || env == 'DEV') {

@@ -15,18 +15,18 @@ function executeCPUScript() {
 
         const { startDate: sd, startHr: st, endDate: ed, endHr: et } = getDates();
         let command = `sadf -s ${st} -e ${et} -j `; //this command out put is in JSON format
-        logger.info(fileName + ' executeCPUScript() command: ' + command);
+        logger.debug(fileName + ' executeCPUScript() command: ' + command);
 
         exec(command, (error, stdout, stderr) => {
             if (error) {
                 reject(error);
                 return;
             }
-            logger.info(fileName + ' executeCPUScript() stdout: ' + stdout);
+            //logger.debug(fileName + ' executeCPUScript() stdout: ' + stdout);
             let stdout1 = JSON.parse(stdout);
-            //logger.info(stdout.sysstat);
-            logger.info(fileName + ' executeCPUScript() stdout1.sysstat.hosts[0]: ' + stdout1.sysstat.hosts[0]);
-            logger.info(fileName + ' executeCPUScript() stdout1.sysstat.hosts[0].statistics[0]: ' + stdout1.sysstat.hosts[0].statistics[0]);
+            //logger.debug(stdout.sysstat);
+           // logger.debug(fileName + ' executeCPUScript() stdout1.sysstat.hosts[0]: ' + stdout1.sysstat.hosts[0]);
+            //logger.debug(fileName + ' executeCPUScript() stdout1.sysstat.hosts[0].statistics[0]: ' + stdout1.sysstat.hosts[0].statistics[0]);
 
             if (stdout1.sysstat.hosts[0].statistics.length != 0 && stdout1.sysstat.hosts[0].statistics[0] !== 'undefined') {
 
@@ -35,82 +35,24 @@ function executeCPUScript() {
                 let metrics = stdout1.sysstat.hosts[0].statistics[0]["cpu-load"][0];
                 //{"cpu": "all", "user": 0.62, "nice": 0.00, "system": 0.35, "iowait": 0.00, "steal": 0.00, "idle": 99.03}
 
-                logger.info(fileName + ' executeCPUScript() ts: ' + JSON.stringify(ts));
-                logger.info(fileName + ' executeCPUScript() metrics: ' + JSON.stringify(metrics));
+                logger.debug(fileName + ' executeCPUScript() ts: ' + JSON.stringify(ts));
+                //logger.debug(fileName + ' executeCPUScript() metrics: ' + JSON.stringify(metrics));
 
                 if (typeof ts == 'undefined' || typeof metrics == 'undefined') {
                     return {}
                 }
                 data.TIMESTAMP = ts.date + ' ' + ts.time;
-                logger.info(fileName + ' executeCPUScript() data.TIMESTAMP: ' + data.TIMESTAMP);
+                //logger.debug(fileName + ' executeCPUScript() data.TIMESTAMP: ' + data.TIMESTAMP);
                 data.CPU = metrics.cpu;
                 data.USER_PERCENTAGE = metrics.user;
                 data.SYS_PERCENTAGE = metrics.system;
                 data.IDLE_PERCENTAGE = metrics.idle;
-                logger.info(fileName + ' executeCPUScript() data: ' + JSON.stringify(data));
+                logger.debug(fileName + ' executeCPUScript() data: ' + JSON.stringify(data));
             }
             resolve(data);
         });
     });
 
-
-    /*    try {
-    
-            await exec(command,
-                (error, stdout, stderr) => {
-                    //logger.info(`${stderr}`);
-                    if (error !== null) {
-                        logger.info(fileName + ' executeCPUScript() exec error: '+error);
-                        return {}
-                    }
-    
-                    if (typeof stdout == 'undefined') {
-                        logger.info(fileName + ' executeCPUScript() No Output from script');
-                        return {}
-                    }
-                    logger.info(fileName + ' executeCPUScript() stdout: '+ stdout);
-                    let stdout1 = JSON.parse(stdout);
-                    //logger.info(stdout.sysstat);
-                    logger.info(fileName + ' executeCPUScript() stdout1.sysstat.hosts[0]: '+stdout1.sysstat.hosts[0]);
-                    logger.info(fileName + ' executeCPUScript() stdout1.sysstat.hosts[0].statistics[0]: '+stdout1.sysstat.hosts[0].statistics[0]);
-    
-                    if (stdout1.sysstat.hosts[0].statistics.length != 0 && stdout1.sysstat.hosts[0].statistics[0] !== 'undefined') {
-    
-                        let ts = stdout1.sysstat.hosts[0].statistics[0].timestamp;
-                        // "timestamp": {"date": "2019-01-24", "time": "16:30:01", "utc": 0, "interval": 600},
-                        let metrics = stdout1.sysstat.hosts[0].statistics[0]["cpu-load"];
-                        //{"cpu": "all", "user": 0.62, "nice": 0.00, "system": 0.35, "iowait": 0.00, "steal": 0.00, "idle": 99.03}
-    
-                        logger.info(fileName + ' executeCPUScript() ts: '+ ts);
-                        logger.info(fileName + ' executeCPUScript() metrics: '+metrics);
-    
-                        if(typeof ts == 'undefined' || typeof metrics == 'undefined')
-                        {
-                            return {}
-                        }
-                        data.TIMESTAMP = ts.date + ts.time;
-                        logger.info(fileName + ' executeCPUScript() data.TIMESTAMP: '+ data.TIMESTAMP);
-                        data.CPU = metrics.cpu;
-                        data.USER_PERCENTAGE = metrics.user;
-                        data.SYS_PERCENTAGE = metrics.system;
-                        data.IDLE_PERCENTAGE = metrics.idle;
-                        logger.info(fileName + ' executeCPUScript() data: '+ JSON.stringify(data));
-                        return data;
-                    } else {
-                        logger.info(fileName + 'No Metrics data from script out put');
-                        return {}
-                    }
-                    if (stderr !== null) {
-                        logger.info(fileName +" executeCPUScript() exec stderr: "+stderr);
-                        return {}
-                    }
-                });
-    
-        } catch (e1) {
-            logger.info(fileName + ' exception - ' + e1);
-            logger.info(fileName + " exception - " + e1);
-        }
-    */
 }
 
 module.exports.executeCPUScript = executeCPUScript
@@ -128,25 +70,25 @@ function executeMemScript() {
         }
         const { startDate: sd, startHr: st, endDate: ed, endHr: et } = getDates();
         let command = `sadf -s ${st} -e ${et} -j -- -r`;
-        logger.info(fileName + ' executeMemScript() command: ' + command);
+        //logger.debug(fileName + ' executeMemScript() command: ' + command);
         exec(command,
             (error, stdout, stderr) => {
-                //logger.info(`${stdout}`);
-                //logger.info(stdout);
+                //logger.debug(`${stdout}`);
+                //logger.debug(stdout);
                 if (error !== null) {
-                    logger.info(fileName + ' executeMemScript() exec error: ' + error);
+                    logger.error(fileName + ' executeMemScript() exec error: ' + error);
                     return {}
                 }
 
                 if (typeof stdout == 'undefined') {
-                    logger.info(fileName + ' executeMemScript() No Output from script');
+                    logger.debug(fileName + ' executeMemScript() No Output from script');
                     return {}
                 }
-                logger.info(fileName + ' executeMemScript() stdout - ' + stdout);
+                //logger.debug(fileName + ' executeMemScript() stdout - ' + stdout);
                 let stdout2 = JSON.parse(stdout);
-                //logger.info(stdout.sysstat);
-                //logger.info(stdout.sysstat.hosts[0]);
-                logger.info(fileName + ' executeMemScript() ' + stdout2.sysstat.hosts[0].statistics[0]);
+                //logger.debug(stdout.sysstat);
+                //logger.debug(stdout.sysstat.hosts[0]);
+                //logger.debug(fileName + ' executeMemScript() ' + stdout2.sysstat.hosts[0].statistics[0]);
 
                 if (stdout2.sysstat.hosts[0].statistics.length != 0 && stdout2.sysstat.hosts[0].statistics[0] !== 'undefined') {
 
@@ -154,8 +96,8 @@ function executeMemScript() {
                     // "timestamp": {"date": "2019-01-24", "time": "16:30:01", "utc": 0, "interval": 600},
                     let metrics = stdout2.sysstat.hosts[0].statistics[0].memory;
                     // "memory": {"memfree": 1098816, "memused": 15160032, "memused-percent": 93.24, "buffers": 456, "cached": 11908596, "commit": 2832912, "commit-percent": 15.43, "active": 7671044, "inactive": 6189336, "dirty": 20}
-                    logger.info(fileName + ' executeMemScript() ts: ' + ts);
-                    logger.info(fileName + ' executeMemScript() metrics: ' + metrics);
+                    //logger.debug(fileName + ' executeMemScript() ts: ' + ts);
+                    //logger.debug(fileName + ' executeMemScript() metrics: ' + metrics);
 
                     if (typeof ts == 'undefined' || typeof metrics == 'undefined') {
                         return;
@@ -166,7 +108,7 @@ function executeMemScript() {
                     data.TOTAL = (metrics.memused + metrics.memfree);
                     data.USED = metrics.memused;
                     data.FREE = metrics.memfree;
-                    logger.info(fileName + ' executeCPUScript() data: ' + JSON.stringify(data));
+                    logger.debug(fileName + ' executeCPUScript() data: ' + JSON.stringify(data));
                 }
                 resolve(data);
             });

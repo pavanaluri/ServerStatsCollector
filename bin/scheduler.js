@@ -12,14 +12,14 @@ function run() {
             const memMetricsConfig = confdata.memoryMetrics;
 
             if (cpuMetricsConfig.isEnabled) {
-                logger.info(fileName + ' CPU Metrics deamon is enabled');
+                logger.debug(fileName + ' CPU Metrics deamon is enabled');
                 await setInterval(cpuStats.collectAndWrite, cpuMetricsConfig.scanFrequencyMS);
                 //await setInterval(cpuStats.getAndWrite, 10000);
                 //await cpuStats.getAndWrite();
             }
 
             if (memMetricsConfig.isEnabled) {
-                logger.info(fileName + ' Memory Metrics deamon is enabled');
+                logger.debug(fileName + ' Memory Metrics deamon is enabled');
                 await setInterval(memStats.collectAndWrite, cpuMetricsConfig.scanFrequencyMS);
             }
 
