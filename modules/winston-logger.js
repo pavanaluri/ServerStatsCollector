@@ -37,7 +37,7 @@ const myFormat = printf(info => {
 });
 
 const localTimestamp = format((info, opts) => {
-    info.timestamp = moment().tz('America/New_York').format("YYYY-MM-DD hh:mm:ss z");
+    info.timestamp = moment().tz('America/New_York').format("YYYY-MM-DD HH:mm:ss z");
   return info;
 });
 

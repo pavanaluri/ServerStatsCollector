@@ -18,6 +18,7 @@ async function startup() {
     logger.info('Initializing scheduler deamon');
     //can have individual scheduler for each service or combine them
     await schedulerDemon.run();
+    logger.info('Scheduler deamon is RUNNING');
   } catch (err) {
     logger.error(err);
     process.exit(1); // Non-zero failure code

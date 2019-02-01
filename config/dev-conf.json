@@ -15,7 +15,7 @@
         }
     },
     "appSettings": {
-        "refreshIntervel": "5",
+        "ENV": "DEV",
         "log_level": "debug"
     },
     "cpuMetrics": {

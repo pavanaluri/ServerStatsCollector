@@ -35,7 +35,7 @@ function executeCPUScript() {
                 let metrics = stdout1.sysstat.hosts[0].statistics[0]["cpu-load"][0];
                 //{"cpu": "all", "user": 0.62, "nice": 0.00, "system": 0.35, "iowait": 0.00, "steal": 0.00, "idle": 99.03}
 
-                logger.debug(fileName + ' executeCPUScript() ts: ' + JSON.stringify(ts));
+                //logger.debug(fileName + ' executeCPUScript() ts: ' + JSON.stringify(ts));
                 //logger.debug(fileName + ' executeCPUScript() metrics: ' + JSON.stringify(metrics));
 
                 if (typeof ts == 'undefined' || typeof metrics == 'undefined') {
@@ -70,7 +70,7 @@ function executeMemScript() {
         }
         const { startDate: sd, startHr: st, endDate: ed, endHr: et } = getDates();
         let command = `sadf -s ${st} -e ${et} -j -- -r`;
-        //logger.debug(fileName + ' executeMemScript() command: ' + command);
+        logger.debug(fileName + ' executeMemScript() command: ' + command);
         exec(command,
             (error, stdout, stderr) => {
                 //logger.debug(`${stdout}`);

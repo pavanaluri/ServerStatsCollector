@@ -14,7 +14,7 @@ function getConfigData() {
 
     let env = process.env.npm_package_config_env;
     logger.debug('config_env= ' + env);
-    //console.log('env = '+pkg.config.env);
+    //logger.debug('env = '+pkg.config.env);
     //LOAD JSON
     if (env === undefined || env == null || env == 'DEV') {
         let rawdata = fs.readFileSync(__dirname + '/dev-conf.json', 'utf-8');

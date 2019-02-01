@@ -15,7 +15,6 @@ function run() {
                 logger.debug(fileName + ' CPU Metrics deamon is enabled');
                 await setInterval(cpuStats.collectAndWrite, cpuMetricsConfig.scanFrequencyMS);
                 //await setInterval(cpuStats.getAndWrite, 10000);
-                //await cpuStats.getAndWrite();
             }
 
             if (memMetricsConfig.isEnabled) {
