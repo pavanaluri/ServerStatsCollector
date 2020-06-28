@@ -1,6 +1,6 @@
 {
   "name": "serverstatscollector",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Executes shell commands to collect Server Performance Metrics like CPU, Memory etc. and writes them to Database",
   "main": "bin/daemon-main.js",
   "scripts": {
