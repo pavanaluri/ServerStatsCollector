@@ -51,17 +51,16 @@ async function shutdown(e) {
 }
 
 process.on('SIGTERM', () => {
-  logger.info('Received SIGTERM');
+  logger.info('Received SIGTERM - SHUTTING DOWN the app');
   shutdown();
 });
 
 process.on('SIGINT', () => {
-  logger.info('Received SIGINT');
+  logger.info('Received SIGINT - SHUTTING DOWN the app');
   shutdown();
 });
 
 process.on('uncaughtException', err => {
-  logger.info('Uncaught exception');
-  logger.error(err);
+  logger.error('Uncaught exception. SHUTTING DOWN the app');
   shutdown(err);
 });

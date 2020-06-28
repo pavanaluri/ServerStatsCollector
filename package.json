@@ -1,10 +1,10 @@
 {
   "name": "serverstatscollector",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Executes shell commands to collect Server Performance Metrics like CPU, Memory etc. and writes them to Database",
-  "main": "bin/deamon-main.js",
+  "main": "bin/daemon-main.js",
   "scripts": {
-    "start": "node ./bin/deamon-main.js",
+    "start": "node ./bin/daemon-main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "config": {
@@ -14,8 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "app-root-path": "^2.1.0",
+    "moment-timezone": "^0.5.23",
     "mssql": "^4.3.0",
-    "winston": "^3.1.0",
-    "moment-timezone":"2.24.0"
+    "winston": "^3.1.0"
   }
 }

@@ -1,31 +1,21 @@
 {
     "server": {
-        "host": "localhost",
-        "port": 8080,
+        "host": "10.195.132.163",
+        "port": 8090,
         "secure": false
     },
     "db": {
         "user": "dbuser",
         "password": "pwd",
-        "server": "db ip or host name",
+        "server": "ip or host",
         "port": 1234,
-        "database": "DBNAME",
+        "database": "db",
         "options": {
             "encrypt": false
         }
     },
     "appSettings": {
         "ENV": "PROD",
-        "log_level": "debug"
-    },
-    "cpuMetrics": {
-        "isEnabled": true,
-        "scanFrequencyMS": 50000,
-        "log_level": "debug"
-    },
-    "memoryMetrics": {
-        "isEnabled": true,
-        "scanFrequencyMS": 50000,
         "log_level": "debug"
     }
 }
